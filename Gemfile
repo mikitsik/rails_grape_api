@@ -13,6 +13,8 @@ gem 'puma', '~> 3.11'
 gem 'grape', '~> 1.2', '>= 1.2.4'
 # Use Devise for authentication
 gem 'devise', '~> 4.7', '>= 4.7.1'
+# Use cross-site requests
+gem 'rack-cors', :require => 'rack/cors'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
