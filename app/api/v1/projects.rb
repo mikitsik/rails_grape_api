@@ -1,4 +1,4 @@
-module API
+module RailsGrapeApi
   module V1
     class Projects < Grape::API
       include API::V1::Defaults

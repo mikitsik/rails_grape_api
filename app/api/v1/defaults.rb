@@ -1,4 +1,4 @@
-module API
+module RailsGrapeApi
   module V1
     module Defaults
       extend ActiveSupport::Concern
@@ -8,8 +8,7 @@ module API
         version "v1", using: :path
         default_format :json
         format :json
-        formatter :json,
-             Grape::Formatter::ActiveModelSerializers
+        formatter :json, Grape::Formatter::ActiveModelSerializers
 
         helpers do
           def permitted_params
@@ -28,6 +27,13 @@ module API
 
         rescue_from ActiveRecord::RecordInvalid do |e|
           error_response(message: e.message, status: 422)
+        end
+
+        rescue_from Grape::Exceptions::ValidationErrors do |e|
+          rack_response({
+            status: e.status,
+            error_msg: e.message,
+          }.to_json, 400)
         end
       end
     end
