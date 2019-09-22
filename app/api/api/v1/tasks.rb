@@ -1,4 +1,4 @@
-module RailsGrapeApi
+module API
   module V1
     class Tasks < Grape::API
       include API::V1::Defaults

@@ -1,4 +1,4 @@
-module RailsGrapeApi
+module API
   module V1
     class Login < Grape::API
       include API::V1::Defaults
@@ -16,6 +16,7 @@ module RailsGrapeApi
             token = user.authentication_tokens.valid.first ||
             AuthenticationToken.generate(user)
             status 200
+            present token.user, with: Entities::UserWithTokenEntity
           else
             error_msg = 'Bad Authentication Parameters'
             error!({ 'error_msg': error_msg }, 401)
