@@ -13,8 +13,10 @@ gem 'puma', '~> 3.11'
 gem 'grape', '~> 1.2', '>= 1.2.4'
 # Use Devise for authentication
 gem 'devise', '~> 4.7', '>= 4.7.1'
-# Use cross-site requests
-gem 'rack-cors', :require => 'rack/cors'
+# Use cross-site requests available
+gem 'rack-cors', '~> 1.0', '>= 1.0.3'
+# Use serializer
+gem 'grape-entity', '~> 0.7.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
@@ -34,6 +36,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Use Rspec-rails for automated tests
   gem 'rspec-rails', '~> 3.8', '>= 3.8.2'
+  # Use Factory-bot-rails for automated tests
+  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.2'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
