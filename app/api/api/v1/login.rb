@@ -1,5 +1,3 @@
-require 'byebug'
-
 module API
   module V1
     class Login < Grape::API
@@ -16,9 +14,8 @@ module API
         post do
           user = User.find_by_email params[:email]
           if user.present? && user.valid_password?(params[:password])
-            byebug
             token = user.authentication_tokens.valid.first ||
-            AuthenticationToken.generate(user)
+            AuthenticationToken.create(user: user, token: AuthenticationToken.generate_unique_secure_token )
             status 200
             present token.user, with: Entities::UserWithTokenEntity
           else
