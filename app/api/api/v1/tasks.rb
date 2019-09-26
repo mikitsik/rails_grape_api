@@ -3,18 +3,47 @@ module API
     class Tasks < Grape::API
       include API::V1::Defaults
 
-      resource :tasks do
-        desc "Return all tasks"
-        get "", root: :tasks do
-          Task.all
-        end
-
-        desc "Return a task"
+      namespace :projects do
         params do
-          requires :id, type: String, desc: "ID of the task"
+          requires :project_id, type: Integer, desc: 'Project ID'
         end
-        get ":id", root: "task" do
-          Task.where(id: permitted_params[:id]).first!
+        namespace ':project_id' do
+          namespace :tasks do
+            params do
+              requires :name, type: String, desc: 'Task name'
+              requires :status, type: Boolean, desc: 'Task status'
+              requires :deadline, type: Datetime, desc: 'Task deadline'
+            end
+
+            desc "Add new task"
+            post do
+              Task.create!(permitted_params)
+            end
+
+            desc "Update a task"
+            params do
+              requires :id, type: Integer, desc: "Task ID"
+              requires :name, type: String, desc: "Task name"
+              requires :status, type: Boolean, desc: 'Task status'
+              requires :deadline, type: Datetime, desc: 'Task deadline'
+            end
+            put ':id' do
+              # authenticate!
+              Task.find(permitted_params[:id]).update(
+                name: permitted_params[:name],
+
+              )
+            end
+
+            desc "Delete a task"
+            params do
+              requires :id, type: Integer, desc: "Task ID"
+            end
+            delete ':id' do
+              # authenticate!
+              Task.find(permitted_params[:id]).destroy!
+            end
+          end
         end
       end
     end

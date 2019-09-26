@@ -3,18 +3,33 @@ module API
     class Projects < Grape::API
       include API::V1::Defaults
 
-      resource :projects do
-        desc "Return all projects"
-        get "", root: :projects do
-          Project.all
+      namespace :projects do
+        desc "Create a project"
+        params do
+          requires :name, type: String, desc: "Project name"
+        end
+        post do
+          # authenticate!
+          Project.create!(permitted_params)
         end
 
-        desc "Return a project"
+        desc "Update a project"
         params do
-          requires :id, type: String, desc: "ID of the project"
+          requires :id, type: Integer, desc: "Project ID"
+          requires :name, type: String, desc: "Project name"
         end
-        get ":id", root: "project" do
-          Project.where(id: permitted_params[:id]).first!
+        put ':id' do
+          # authenticate!
+          Project.find(permitted_params[:id]).update(name: permitted_params[:name])
+        end
+
+        desc "Delete a project"
+        params do
+          requires :id, type: Integer, desc: "Project ID"
+        end
+        delete ':id' do
+          # authenticate!
+          Project.find(permitted_params[:id]).destroy!
         end
       end
     end
