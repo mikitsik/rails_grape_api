@@ -55,7 +55,7 @@ describe '/api/v1/login' do
 
       specify 'returns the token as part of the response' do
         api_call params
-        expect(JSON.parse(response.body)['token']).to be_present
+        expect(JSON.parse(response.body)['user']['token']).to be_present
       end
     end
   end

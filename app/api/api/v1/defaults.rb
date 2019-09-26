@@ -28,6 +28,14 @@ module API
           error_response(message: e.message, status: 422)
         end
 
+        rescue_from ActiveRecord::RecordNotSaved do |e|
+          error_response(message: e.message, status: 500)
+        end
+
+        rescue_from ActiveRecord::RecordNotDestroyed do |e|
+          error_response(message: e.message, status: 500)
+        end
+
         rescue_from Grape::Exceptions::ValidationErrors do |e|
           rack_response({
             status: e.status,
