@@ -6,7 +6,6 @@ describe API::V1::Entities::UserWithTokenEntity do
     let(:json) { API::V1::Entities::UserWithTokenEntity.new(token.user).as_json }
 
     specify 'presents user email' do
-      byebug
       expect(json[:email]).to be_present
     end
 

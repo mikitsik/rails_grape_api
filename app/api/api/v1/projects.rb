@@ -4,7 +4,7 @@ module API
       include API::V1::Defaults
 
       namespace :projects do
-        desc "Create a project"
+        desc "Create a new project"
         params do
           requires :name, type: String, desc: "Project name"
         end
@@ -31,8 +31,7 @@ module API
         end
         delete ':id' do
           # authenticate!
-          project = Project.find(permitted_params[:id]).destroy!
-          present project, with: API::V1::Entities::ProjectEntity
+          Project.find(permitted_params[:id]).destroy!
         end
       end
     end

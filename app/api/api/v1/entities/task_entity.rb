@@ -11,7 +11,6 @@ module API
         expose :id
         expose :name
         expose :status
-        expose :project_id
 
         with_options(format_with: :utc) do
           expose :deadline

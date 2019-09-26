@@ -13,7 +13,6 @@ module API
             desc "Add new task"
             params do
               requires :name, type: String, desc: 'Task name'
-              requires :status, type: Boolean, desc: 'Task status'
               requires :deadline, type: DateTime, desc: 'Task deadline'
             end
             post do
@@ -25,7 +24,7 @@ module API
             params do
               requires :id, type: Integer, desc: "Task ID"
               optional :name, type: String, desc: "Task name"
-              optional :status, type: Boolean, desc: 'Task status'
+              optional :status, type: Integer, desc: 'Task status'
               optional :deadline, type: DateTime, desc: 'Task deadline'
             end
             put ':id' do
@@ -46,6 +45,12 @@ module API
               # authenticate!
               task = Task.find(permitted_params[:id]).destroy!
               present task, with: API::V1::Entities::TaskEntity
+            end
+
+            desc "Prioritize tasks"
+            get :prioritized do
+              tasks = Tasks.prioritize
+              present tasks, with: API::V1::Entities::TaskEntity
             end
           end
         end
