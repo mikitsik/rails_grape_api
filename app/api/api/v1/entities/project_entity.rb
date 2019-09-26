@@ -2,12 +2,19 @@ module API
   module V1
     module Entities
       class ProjectEntity < Grape::Entity
+        format_with(:utc) do |date|
+          date.utc
+        end
+
         root 'projects', 'project'
 
         expose :id
         expose :name
-        expose :created_at, format_with: :utc
-        expose :updated_at, format_with: :utc
+        
+        with_options(format_with: :utc) do
+          expose :created_at
+          expose :updated_at
+        end
       end
     end
   end

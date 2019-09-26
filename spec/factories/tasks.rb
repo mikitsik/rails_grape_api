@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :task do
     name { "MyString" }
-    status { false }
+    status { Task.statuses.values.sample }
     deadline { "2019-09-25 10:46:41" }
-    project { nil }
+    project
   end
 end

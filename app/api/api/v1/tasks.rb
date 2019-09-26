@@ -14,7 +14,7 @@ module API
             params do
               requires :name, type: String, desc: 'Task name'
               requires :status, type: Boolean, desc: 'Task status'
-              requires :deadline, type: Datetime, desc: 'Task deadline'
+              requires :deadline, type: DateTime, desc: 'Task deadline'
             end
             post do
               task = Task.create!(permitted_params)
@@ -26,7 +26,7 @@ module API
               requires :id, type: Integer, desc: "Task ID"
               optional :name, type: String, desc: "Task name"
               optional :status, type: Boolean, desc: 'Task status'
-              optional :deadline, type: Datetime, desc: 'Task deadline'
+              optional :deadline, type: DateTime, desc: 'Task deadline'
             end
             put ':id' do
               # authenticate!
