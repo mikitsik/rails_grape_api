@@ -10,17 +10,19 @@ module API
         end
         post do
           # authenticate!
-          Project.create!(permitted_params)
+          project = Project.create!(permitted_params)
+          present project, with: API::V1::Entities::ProjectEntity
         end
 
         desc "Update a project"
         params do
           requires :id, type: Integer, desc: "Project ID"
-          requires :name, type: String, desc: "Project name"
+          optional :name, type: String, desc: "Project name"
         end
         put ':id' do
           # authenticate!
-          Project.find(permitted_params[:id]).update(name: permitted_params[:name])
+          project = Project.find(permitted_params[:id]).update!(name: permitted_params[:name])
+          present project, with: API::V1::Entities::ProjectEntity
         end
 
         desc "Delete a project"
@@ -29,7 +31,8 @@ module API
         end
         delete ':id' do
           # authenticate!
-          Project.find(permitted_params[:id]).destroy!
+          project = Project.find(permitted_params[:id]).destroy!
+          present project, with: API::V1::Entities::ProjectEntity
         end
       end
     end
