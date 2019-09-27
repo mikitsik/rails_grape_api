@@ -1,6 +1,8 @@
 module API
   module V1
     class Projects < Grape::API
+      helpers API::V1::ApiHelpers::AuthenticationHelper
+      before { authenticate! }
       include API::V1::Defaults
 
       namespace :projects do
@@ -9,7 +11,6 @@ module API
           requires :name, type: String, desc: "Project name"
         end
         post do
-          # authenticate!
           project = Project.create!(permitted_params)
           present project, with: API::V1::Entities::ProjectEntity
         end
@@ -20,7 +21,6 @@ module API
           optional :name, type: String, desc: "Project name"
         end
         put ':id' do
-          # authenticate!
           project = Project.find(permitted_params[:id]).update!(name: permitted_params[:name])
           present project, with: API::V1::Entities::ProjectEntity
         end
@@ -30,7 +30,6 @@ module API
           requires :id, type: Integer, desc: "Project ID"
         end
         delete ':id' do
-          # authenticate!
           Project.find(permitted_params[:id]).destroy!
         end
       end
