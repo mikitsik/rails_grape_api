@@ -15,6 +15,14 @@ module API
                include_missing: false)
           end
 
+          def authorize!(arg)
+            author = current_user.id
+            unless author == arg.user_id || author == arg.project.user.id
+              error_msg = 'access denied'
+              error!({ 'error_msg': error_msg }, 403)
+            end
+          end
+
           def logger
             Rails.logger
           end

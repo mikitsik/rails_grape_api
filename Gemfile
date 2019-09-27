@@ -17,8 +17,6 @@ gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'rack-cors', '~> 1.0', '>= 1.0.3'
 # Use serializer
 gem 'grape-entity', '~> 0.7.1'
-# Use grape-cancan for authorization
-gem 'grape-cancan', '~> 0.0.3'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production

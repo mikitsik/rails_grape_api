@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2019_09_25_074640) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
-    t.integer "status"
+    t.integer "status", default: 0
     t.datetime "deadline"
     t.integer "project_id", null: false
     t.datetime "created_at", precision: 6, null: false

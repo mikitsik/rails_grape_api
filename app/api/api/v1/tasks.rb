@@ -31,7 +31,9 @@ module API
               optional :deadline, type: DateTime, desc: 'Task deadline'
             end
             put ':id' do
-              task = Task.find(permitted_params[:id]).update!(
+              task = Task.find(permitted_params[:id])
+              authorize! task
+              task.update!(
                 name: permitted_params[:name],
                 status: permitted_params[:status],
                 deadline: permitted_params[:deadline]
@@ -44,8 +46,11 @@ module API
               requires :id, type: Integer, desc: "Task ID"
             end
             delete ':id' do
-              task = Task.find(permitted_params[:id]).destroy!
+              task = Task.find(permitted_params[:id])
+              authorize! task
+              task.destroy!
               present task, with: API::V1::Entities::TaskEntity
+              # { 'error_msg': error_msg }, 403
             end
 
             desc "Prioritize tasks"

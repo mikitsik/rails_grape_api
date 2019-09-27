@@ -1,3 +1,5 @@
+require 'byebug'
+
 module API
   module V1
     module ApiHelpers
