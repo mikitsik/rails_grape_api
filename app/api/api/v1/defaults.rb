@@ -15,6 +15,14 @@ module API
                include_missing: false)
           end
 
+          def authorize!(arg)
+            author = current_user.id
+            unless author == arg.user_id || author == arg.project.user.id
+              error_msg = 'access denied'
+              error!({ 'error_msg': error_msg }, 403)
+            end
+          end
+
           def logger
             Rails.logger
           end
@@ -26,14 +34,6 @@ module API
 
         rescue_from ActiveRecord::RecordInvalid do |e|
           error_response(message: e.message, status: 422)
-        end
-
-        rescue_from ActiveRecord::RecordNotSaved do |e|
-          error_response(message: e.message, status: 500)
-        end
-
-        rescue_from ActiveRecord::RecordNotDestroyed do |e|
-          error_response(message: e.message, status: 500)
         end
 
         rescue_from Grape::Exceptions::ValidationErrors do |e|

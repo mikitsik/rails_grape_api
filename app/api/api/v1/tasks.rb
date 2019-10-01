@@ -1,6 +1,8 @@
 module API
   module V1
     class Tasks < Grape::API
+      helpers API::V1::ApiHelpers::AuthenticationHelper
+      before { authenticate! }
       include API::V1::Defaults
 
       namespace :projects do
@@ -13,6 +15,7 @@ module API
             desc "Add new task"
             params do
               requires :name, type: String, desc: 'Task name'
+              requires :project_id, type: Integer, desc: "Project's task"
               requires :deadline, type: DateTime, desc: 'Task deadline'
             end
             post do
@@ -28,8 +31,9 @@ module API
               optional :deadline, type: DateTime, desc: 'Task deadline'
             end
             put ':id' do
-              # authenticate!
-              task = Task.find(permitted_params[:id]).update!(
+              task = Task.find(permitted_params[:id])
+              authorize! task
+              task.update!(
                 name: permitted_params[:name],
                 status: permitted_params[:status],
                 deadline: permitted_params[:deadline]
@@ -42,9 +46,11 @@ module API
               requires :id, type: Integer, desc: "Task ID"
             end
             delete ':id' do
-              # authenticate!
-              task = Task.find(permitted_params[:id]).destroy!
+              task = Task.find(permitted_params[:id])
+              authorize! task
+              task.destroy!
               present task, with: API::V1::Entities::TaskEntity
+              # { 'error_msg': error_msg }, 403
             end
 
             desc "Prioritize tasks"
