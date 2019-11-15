@@ -14,7 +14,7 @@ gem 'grape', '~> 1.2', '>= 1.2.4'
 # Use Devise for authentication
 gem 'devise', '~> 4.7', '>= 4.7.1'
 # Use cross-site requests available
-gem 'rack-cors', '~> 1.0', '>= 1.0.3'
+gem 'rack-cors', '~> 1.0'
 # Use serializer
 gem 'grape-entity', '~> 0.7.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
